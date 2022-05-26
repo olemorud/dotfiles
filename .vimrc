@@ -40,3 +40,7 @@ autocmd filetype c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -lm -o
 set background=light
 set termguicolors
 colorscheme melange
+
+" Save swap and undo and backup files in separate directory
+set directory=$HOME/.vim/swapfiles//
+set backupdir=$HOME/.vim/backups//

@@ -91,22 +91,22 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 configure_prompt() {
-    prompt_symbol=@
-    [ "$EUID" -eq 0 ] && prompt_symbol=@
-    case "$PROMPT_ALTERNATIVE" in
-        twoline)
-            PROMPT=' %(?.%B%F{blue}🐢.%F{red}?%?)%f %B%F{240}%1~%f%b '
-            RPROMPT=''
-            ;;
-        oneline)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
-            RPROMPT=
-            ;;
-        backtrack)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}%(#.#.$) '
-            RPROMPT=
-            ;;
-    esac
+    PROMPT=' %(?.%B%F{blue}🐢.%F{red}?%?)%f %B%F{240}%1~%f%b '
+#    prompt_symbol=@
+#    [ "$EUID" -eq 0 ] && prompt_symbol=@
+#    case "$PROMPT_ALTERNATIVE" in
+#        twoline)
+#            RPROMPT=''
+#            ;;
+#        oneline)
+#            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
+#            RPROMPT=
+#            ;;
+#        backtrack)
+#            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}%(#.#.$) '
+#            RPROMPT=
+#            ;;
+#    esac
 }
 
 # The following block is surrounded by two delimiters.
