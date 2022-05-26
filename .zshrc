@@ -53,7 +53,7 @@ setopt hist_expire_dups_first # delete duplicates first when HISTFILE size excee
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
-#setopt share_history         # share command history data
+setopt share_history         # share command history data
 
 # force zsh to show the complete history
 alias history="history 0"
@@ -91,7 +91,8 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 configure_prompt() {
-    PROMPT=' %(?.%B%F{blue}🐢.%F{red}?%?)%f %B%F{240}%1~%f%b '
+	PROMPT=" 🐢 %F{240}%~%f "
+	RPROMPT="%T - %?"
 #    prompt_symbol=@
 #    [ "$EUID" -eq 0 ] && prompt_symbol=@
 #    case "$PROMPT_ALTERNATIVE" in
