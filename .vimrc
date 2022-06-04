@@ -37,8 +37,18 @@ set shiftwidth=4
 autocmd filetype c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -lm -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 
 " Color scheme
+if &term =~ '256color'
+    " disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    " see also https://sunaku.github.io/vim-256color-bce.html
+    set t_ut=
+endif
+
+set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
+set t_8b=[48;2;%lu;%lu;%lum        " set background color
 set background=light
 set termguicolors
+set t_Co=256
 colorscheme melange
 
 " Save swap and undo and backup files in separate directory
