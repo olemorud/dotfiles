@@ -91,31 +91,10 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 configure_prompt() {
-	PROMPT=" 🐢 %F{240}%~%f "
+	PROMPT=" 🐢 %F{240}%~
+  $%f "
 	RPROMPT="%T - %?"
-#    prompt_symbol=@
-#    [ "$EUID" -eq 0 ] && prompt_symbol=@
-#    case "$PROMPT_ALTERNATIVE" in
-#        twoline)
-#            RPROMPT=''
-#            ;;
-#        oneline)
-#            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
-#            RPROMPT=
-#            ;;
-#        backtrack)
-#            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}%(#.#.$) '
-#            RPROMPT=
-#            ;;
-#    esac
 }
-
-# The following block is surrounded by two delimiters.
-# These delimiters must not be modified. Thanks.
-# START KALI CONFIG VARIABLES
-PROMPT_ALTERNATIVE=twoline
-NEWLINE_BEFORE_PROMPT=yes
-# STOP KALI CONFIG VARIABLES
 
 if [ "$color_prompt" = yes ]; then
     # override default virtualenv indicator in prompt
@@ -174,18 +153,6 @@ else
 fi
 unset color_prompt force_color_prompt
 
-toggle_oneline_prompt(){
-    if [ "$PROMPT_ALTERNATIVE" = oneline ]; then
-        PROMPT_ALTERNATIVE=twoline
-    else
-        PROMPT_ALTERNATIVE=oneline
-    fi
-    configure_prompt
-    zle reset-prompt
-}
-zle -N toggle_oneline_prompt
-bindkey ^P toggle_oneline_prompt
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
@@ -198,15 +165,7 @@ esac
 precmd() {
     # Print the previously configured title
     print -Pnr -- "$TERM_TITLE"
-
-    # Print a new line before the prompt, but only if it is not the first line
-    if [ "$NEWLINE_BEFORE_PROMPT" = yes ]; then
-        if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then
-            _NEW_LINE_BEFORE_PROMPT=1
-        else
-            print ""
-        fi
-    fi
+	print ""
 }
 
 # enable color support of ls, less and man, and also add handy aliases
@@ -255,3 +214,19 @@ fi
 export PATH=$PATH:/snap/bin
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+lazy() { cc $1 -o "${1:0:-2}.out" -lm -g3 && gdb -q -ex run ./${1:0:-2}.out }
+
+cdd() {
+	if [ -z "$1" ]
+	then
+		read 1
+	fi
+
+	mkdir -p $1
+	cd $1
+}
+
+if [[ -z $DISPLAY ]]
+then
+	startx
+fi
