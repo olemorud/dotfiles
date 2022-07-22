@@ -4,9 +4,6 @@ syntax reset
 set t_Co=256
 let g:colors_name = 'melange'
 
-if &background == 'dark'
-
-else
 let g:terminal_color_0  = '#E9E1DB'
 let g:terminal_color_1  = '#D7898C'
 let g:terminal_color_2  = '#83B887'
@@ -69,7 +66,7 @@ highlight Melange guifg=NONE guibg=NONE guisp=NONE gui=NONE
 highlight ModeMsg guifg=#DED2C8 guibg=#6B5C4D guisp=NONE gui=NONE
 highlight MoreMsg guifg=#83B887 guibg=NONE guisp=NONE gui=bold
 highlight NonText guifg=#DED2C8 guibg=#000000 guisp=NONE gui=NONE
-highlight Normal guifg=#6B5C4D guibg=#FAFBFC guisp=NONE gui=NONE
+highlight Normal guifg=#444444 guibg=#FAFAFA guisp=NONE gui=NONE
 highlight NormalFloat guifg=NONE guibg=#E9E1DB guisp=NONE gui=NONE
 highlight Number guifg=#854882 guibg=NONE guisp=NONE gui=NONE
 highlight Operator guifg=#C65333 guibg=NONE guisp=NONE gui=NONE
@@ -157,4 +154,3 @@ highlight! link texMathZone TSMath
 highlight! link texOptEqual Operator
 highlight! link texOptSep TSPunctDelimiter
 highlight! link texRefArg Constant
-endif
