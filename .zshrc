@@ -1,7 +1,91 @@
+
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
-setopt autocd              # change directory just by typing its name
+
+
+
+
+
+
+
+
+
+# >unironically using kali linux' zsh configuration as a template
+
+
+
+
+
+
+
+
+
+
+
+
+
+########################################
+#               ALIASES                #
+########################################
+
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' # dotfiles repo management
+
+alias pdf="zathura"
+alias scrot="scrot -izs"
+alias pacman="sudo pacman"
+alias ghc="ghc --make -dynamic"
+alias vim="nvim"
+alias vi="nvim"
+alias history="history 0" # force zsh to show the complete history
+
+# lazy <source file> -- compiles and runs c/c++ (debug mode)
+lazy() { 
+	cc $1 -o "${1:0:-2}.out" -lm -g3 && gdb -q -ex run ./${1:0:-2}.out
+}
+
+# create directory and set it as cwd
+take() {
+	if [ -z "$1" ]
+	then
+		read 1
+	fi
+
+	mkdir -p $1
+	cd $1
+}
+
+# compile markdown to html and view in browser
+m() {
+	if [[ -z "$2" ]]; then
+	  2="$HOME/air.css"
+	fi
+
+	if [[ -z $1 ]]; then
+	  1="README.md"
+	fi
+
+	pandoc $1 -f gfm --css=$2 --self-contained --metadata title=$1 | { qutebrowser "data:text/html;base64,$(base64 -w 0)" &}
+}
+
+# same as above, but in lynx (terminal based web browser)
+m2(){
+	if [[ -z $1 ]]; then
+	  1="README.md"
+	fi
+	pandoc $1 | lynx -stdin
+}
+
+
+########################################
+#               OPTIONS                #
+########################################
+
+#setopt autocd             # change directory just by typing its name
 #setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
 setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
@@ -9,24 +93,9 @@ setopt nonomatch           # hide error message if there is no match for the pat
 setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
-
+color_prompt=yes		   # enable colors
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
-
-# hide EOL sign ('%')
-PROMPT_EOL_MARK=""
-
-# configure key keybindings
-bindkey -e                                        # emacs key bindings
-bindkey ' ' magic-space                           # do history expansion on space
-bindkey '^[[3;5~' kill-word                       # ctrl + Supr
-bindkey '^[[3~' delete-char                       # delete
-bindkey '^[[1;5C' forward-word                    # ctrl + ->
-bindkey '^[[1;5D' backward-word                   # ctrl + <-
-bindkey '^[[5~' beginning-of-buffer-or-history    # page up
-bindkey '^[[6~' end-of-buffer-or-history          # page down
-bindkey '^[[H' beginning-of-line                  # home
-bindkey '^[[F' end-of-line                        # end
-bindkey '^[[Z' undo                               # shift + tab undo last action
+PROMPT_EOL_MARK="" 		   # hide EOL sign ('%')
 
 # enable completion features
 autoload -Uz compinit
@@ -55,8 +124,6 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history         # share command history data
 
-# force zsh to show the complete history
-alias history="history 0"
 
 # configure `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
@@ -74,21 +141,6 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        # We have color support; assume it's compliant with Ecma-48
-        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        # a case would tend to support setf rather than setaf.)
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
 
 configure_prompt() {
 	PROMPT=" 🐢 %F{240}%~
@@ -151,16 +203,7 @@ if [ "$color_prompt" = yes ]; then
 else
     PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%# '
 fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
-    TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%n@%m: %~\a'
-    ;;
-*)
-    ;;
-esac
+unset color_prompt
 
 precmd() {
     # Print the previously configured title
@@ -172,9 +215,6 @@ precmd() {
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
@@ -194,38 +234,10 @@ if [ -x /usr/bin/dircolors ]; then
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 fi
 
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
+# add snap to path
+# export PATH=$PATH:/snap/bin
 
-# enable auto-suggestions based on the history
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    # change suggestion color
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
-fi
-
-# enable command-not-found if installed
-if [ -f /etc/zsh_command_not_found ]; then
-    . /etc/zsh_command_not_found
-fi
-
-export PATH=$PATH:/snap/bin
-
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-lazy() { cc $1 -o "${1:0:-2}.out" -lm -g3 && gdb -q -ex run ./${1:0:-2}.out }
-
-cdd() {
-	if [ -z "$1" ]
-	then
-		read 1
-	fi
-
-	mkdir -p $1
-	cd $1
-}
-
+# start x display server on logon
 if [[ -z $DISPLAY ]]
 then
 	startx
