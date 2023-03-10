@@ -1,3 +1,59 @@
+call plug#begin()
+
+" Language Server Protocol
+Plug 'mattn/vim-lsp-settings', { 'commit': '33ad6db' }
+Plug 'prabirshrestha/asyncomplete-lsp.vim', { 'commit': 'cc5247b' }
+Plug 'prabirshrestha/asyncomplete.vim', { 'commit': '9c76518'  }
+Plug 'prabirshrestha/vim-lsp', { 'commit': 'e82e73a' }
+
+" Bufferlie
+Plug 'bling/vim-bufferline'
+
+call plug#end()
+
+" Line numbers
+set number
+
+" Disable Ex mode
+noremap Q <nop>
+
+" Tab complete
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+
+
+" Preview Window
+ " let g:asyncomplete_auto_completeopt = 0 " disable auto popup
+set completeopt=menuone,noinsert,noselect,preview
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" File explorer side pane
+let g:netrw_winsize = 12
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+autocmd VimEnter * Lexplore .
+
+" Terminal bottom pane
+" set termwinsize=15x0
+" autocmd VimEnter * botright terminal
+" ^^ Use ctrl+z from normal mode and go back with 'fg' instead
+
+" Autoload file changes (undo with 'u')
+set autoread
+
+" Backspace through anything in insert mode
+set backspace=indent,eol,start
+
+" Make buffers behave more like tabs
+set hidden
+noremap gl :bnext!<CR>
+noremap gh :bprevious!<CR>
+noremap gd :bdelete!<CR>
+
+" The souls of a thousand nerds torment me as I make the mouse more useful
+set mouse=a
+
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
 
@@ -33,7 +89,7 @@ set wildmenu
 set tabstop=4
 set shiftwidth=4
 
-" F5 to compile and run C programs
+" F5 to compile and run simple C programs
 autocmd filetype c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -lm -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 
 " Color scheme
@@ -54,3 +110,4 @@ colorscheme melange
 " Save swap and undo and backup files in separate directory
 set directory=$HOME/.vim/swapfiles//
 set backupdir=$HOME/.vim/backups//
+
