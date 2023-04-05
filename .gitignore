@@ -1,1 +1,7 @@
-*.cfg
+.vim/.netrwhist
+.vim/autoload/
+.vim/plugged/
+.vim/swapfiles/
+.vim/swapfiles/
+.vim/swapfiles/
+.vim/swapfiles/
