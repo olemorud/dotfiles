@@ -6,8 +6,11 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim', { 'commit': 'cc5247b' }
 Plug 'prabirshrestha/asyncomplete.vim', { 'commit': '9c76518'  }
 Plug 'prabirshrestha/vim-lsp', { 'commit': 'e82e73a' }
 
-" Bufferlie
-Plug 'bling/vim-bufferline'
+" Bufferline
+Plug 'bling/vim-bufferline', { 'commit': '651fd01' }
+
+" AI autocompletion (codeium)
+Plug 'Exafunction/codeium.vim', { 'commit': '41b718e' }
 
 call plug#end()
 
