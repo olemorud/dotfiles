@@ -1,3 +1,7 @@
+
+" Save swap and undo and backup files in separate directory
+set directory=$HOME/.vim/swapfiles//
+set backupdir=$HOME/.vim/backups//
 call plug#begin()
 
 " Language Server Protocol
@@ -16,6 +20,9 @@ call plug#end()
 
 " Line numbers
 set number
+
+" Automatically reload file changes from disk
+set autoread
 
 " Disable Ex mode
 noremap Q <nop>
@@ -53,6 +60,10 @@ set hidden
 noremap gl :bnext!<CR>
 noremap gh :bprevious!<CR>
 noremap gd :bdelete!<CR>
+
+" Termdebug
+let g:termdebug_popup = 0
+let g:termdebug_wide = 163
 
 " The souls of a thousand nerds torment me as I make the mouse more useful
 set mouse=a
@@ -113,4 +124,5 @@ colorscheme melange
 " Save swap and undo and backup files in separate directory
 set directory=$HOME/.vim/swapfiles//
 set backupdir=$HOME/.vim/backups//
+
 
