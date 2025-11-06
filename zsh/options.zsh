@@ -1,4 +1,3 @@
-#!/usr/bin/false
 
 #setopt autocd             # change directory just by typing its name
 #setopt correct            # auto correct mistakes
@@ -33,17 +32,20 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 
 # History configurations
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=2000
+HISTSIZE=10000
+SAVEHIST=20000
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
-setopt share_history         # share command history data
-
+setopt share_history          # share command history data
 
 # configure `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[3~" delete-char

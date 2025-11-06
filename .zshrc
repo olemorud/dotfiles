@@ -1,7 +1,6 @@
+#!/usr/bin/awk BEGIN{print "Error: this script should be sourced!"; exit 1}
 
-if [[ ! -v ZSH_CUSTOM ]]; then
-	$ZSH_CUSTOM=$HOME
-fi
+ZSH_CUSTOM="$HOME/zsh"
 
 source $ZSH_CUSTOM/aliases.zsh
 source $ZSH_CUSTOM/options.zsh
